@@ -5,7 +5,8 @@ Page({
   data: {
     cartItems: [], // 购物车商品
     totalPrice: 0, // 总价
-    loading: true // 加载状态
+    loading: true, // 加载状态
+    paying: false // 支付状态
   },
 
   onLoad() {
@@ -167,8 +168,85 @@ Page({
       return;
     }
 
-    wx.navigateTo({
-      url: '/pages/order/checkout'
+    this.handlePayment();
+  },
+
+  // 处理支付
+  handlePayment() {
+    if (this.data.paying) return;
+    
+    this.setData({ paying: true });
+    wx.showLoading({ title: '支付中...' });
+
+    wx.request({
+      url: `${app.globalData.apiBaseUrl}/orders`,
+      method: 'POST',
+      data: {
+        items: this.data.cartItems,
+        totalPrice: this.data.totalPrice
+      },
+      success: (res) => {
+        if (res.statusCode === 201) {
+          const orderId = res.data.id;
+          this.requestPayment(orderId);
+        } else {
+          wx.showToast({
+            title: '创建订单失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '网络错误',
+          icon: 'none'
+        });
+      },
+      complete: () => {
+        this.setData({ paying: false });
+        wx.hideLoading();
+      }
+    });
+  },
+
+  // 请求支付
+  requestPayment(orderId) {
+    wx.request({
+      url: `${app.globalData.apiBaseUrl}/orders/${orderId}/wechat/pay`,
+      method: 'POST',
+      success: (res) => {
+        if (res.statusCode === 200) {
+          const paymentParams = res.data;
+          wx.requestPayment({
+            ...paymentParams,
+            success: () => {
+              wx.showToast({
+                title: '支付成功',
+                icon: 'success'
+              });
+              // 清空购物车
+              this.setData({ cartItems: [], totalPrice: 0 });
+            },
+            fail: () => {
+              wx.showToast({
+                title: '支付失败',
+                icon: 'none'
+              });
+            }
+          });
+        } else {
+          wx.showToast({
+            title: '获取支付参数失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '网络错误',
+          icon: 'none'
+        });
+      }
     });
   }
 });

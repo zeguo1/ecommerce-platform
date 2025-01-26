@@ -28,6 +28,12 @@
     <view class="total-price">
       总计：¥{{totalPrice}}
     </view>
-    <button class="checkout-btn" bindtap="checkout">去结算</button>
+    <button 
+      class="checkout-btn" 
+      bindtap="checkout"
+      disabled="{{paying || cartItems.length === 0}}"
+    >
+      {{paying ? '支付中...' : '去结算'}}
+    </button>
   </view>
 </view>

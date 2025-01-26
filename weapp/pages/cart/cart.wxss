@@ -120,4 +120,15 @@
   background: #e4393c;
   color: #fff;
   border-radius: 40rpx;
+  transition: all 0.3s;
+}
+
+.checkout-btn[disabled] {
+  background: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.checkout-btn[disabled]:active {
+  transform: none;
 }
