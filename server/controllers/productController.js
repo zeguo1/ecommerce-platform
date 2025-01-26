@@ -1,138 +1,161 @@
+import asyncHandler from 'express-async-handler';
 import Product from '../models/Product.js';
-import path from 'path';
-import fs from 'fs';
 
-// @desc    Fetch all products
+// @desc    获取所有商品
 // @route   GET /api/products
 // @access  Public
-const getProducts = async (req, res) => {
-  try {
-    const products = await Product.find({});
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: 'Server Error', error: error.message });
-  }
-};
+const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 12;
+  const page = Number(req.query.pageNumber) || 1;
 
-// @desc    Fetch single product
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
+});
+
+// @desc    获取单个商品
 // @route   GET /api/products/:id
 // @access  Public
-const getProductById = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404).json({ message: 'Product not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Server Error', error: error.message });
-  }
-};
+const getProductById = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
 
-// @desc    Delete a product
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404);
+    throw new Error('商品未找到');
+  }
+});
+
+// @desc    删除商品
 // @route   DELETE /api/products/:id
 // @access  Private/Admin
-const deleteProduct = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (product) {
-      // Remove image file if exists
-      if (product.imageUrl) {
-        const imagePath = path.join(
-          path.resolve(),
-          'uploads',
-          product.imageUrl
-        );
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-        }
-      }
-      
-      await product.remove();
-      res.json({ message: 'Product removed' });
-    } else {
-      res.status(404).json({ message: 'Product not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Server Error', error: error.message });
-  }
-};
+const deleteProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
 
-// @desc    Create a product
+  if (product) {
+    await product.remove();
+    res.json({ message: '商品已删除' });
+  } else {
+    res.status(404);
+    throw new Error('商品未找到');
+  }
+});
+
+// @desc    创建商品
 // @route   POST /api/products
 // @access  Private/Admin
-const createProduct = async (req, res) => {
-  try {
-    // 处理文件上传错误
-    if (!req.file) {
-      return res.status(400).json({ message: '请上传产品图片' });
-    }
+const createProduct = asyncHandler(async (req, res) => {
+  const product = new Product({
+    name: '示例商品',
+    price: 0,
+    user: req.user._id,
+    image: '/images/sample.jpg',
+    brand: '示例品牌',
+    category: '示例分类',
+    countInStock: 0,
+    numReviews: 0,
+    description: '示例描述',
+  });
 
-    // 获取并验证必填字段
-    const { name, price } = req.body;
-    if (!name || !price) {
-      return res.status(400).json({ message: '产品名称和价格是必填项' });
-    }
+  const createdProduct = await product.save();
+  res.status(201).json(createdProduct);
+});
 
-    // 设置可选字段默认值
-    const product = new Product({
-      name,
-      price,
-      description: req.body.description || '暂无描述',
-      category: req.body.category || '默认分类',
-      countInStock: req.body.countInStock || 0,
-      user: req.user._id,
-      imageUrl: `/uploads/${req.file.filename}`
-    });
-
-    const createdProduct = await product.save();
-    res.status(201).json(createdProduct);
-  } catch (error) {
-    res.status(500).json({ message: 'Server Error', error: error.message });
-  }
-};
-
-// @desc    Update a product
+// @desc    更新商品
 // @route   PUT /api/products/:id
 // @access  Private/Admin
-const updateProduct = async (req, res) => {
-  try {
-    const { name, price, description, category, countInStock } = req.body;
-    const product = await Product.findById(req.params.id);
+const updateProduct = asyncHandler(async (req, res) => {
+  const {
+    name,
+    price,
+    description,
+    image,
+    brand,
+    category,
+    countInStock,
+  } = req.body;
 
-    if (product) {
-      product.name = name || product.name;
-      product.price = price || product.price;
-      product.description = description || product.description;
-      product.category = category || product.category;
-      product.countInStock = countInStock || product.countInStock;
+  const product = await Product.findById(req.params.id);
 
-      // Update image if new file uploaded
-      if (req.file) {
-        // Remove old image if exists
-        if (product.imageUrl) {
-          const oldImagePath = path.join(
-            path.resolve(),
-            'uploads',
-            product.imageUrl
-          );
-          if (fs.existsSync(oldImagePath)) {
-            fs.unlinkSync(oldImagePath);
-          }
-        }
-        product.imageUrl = `/uploads/${req.file.filename}`;
-      }
+  if (product) {
+    product.name = name;
+    product.price = price;
+    product.description = description;
+    product.image = image;
+    product.brand = brand;
+    product.category = category;
+    product.countInStock = countInStock;
 
-      const updatedProduct = await product.save();
-      res.json(updatedProduct);
-    } else {
-      res.status(404).json({ message: 'Product not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Server Error', error: error.message });
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  } else {
+    res.status(404);
+    throw new Error('商品未找到');
   }
-};
+});
+
+// @desc    创建商品评价
+// @route   POST /api/products/:id/reviews
+// @access  Private
+const createProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    const alreadyReviewed = product.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error('您已经评价过该商品');
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    };
+
+    product.reviews.push(review);
+
+    product.numReviews = product.reviews.length;
+
+    product.rating =
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      product.reviews.length;
+
+    await product.save();
+    res.status(201).json({ message: '评价已添加' });
+  } else {
+    res.status(404);
+    throw new Error('商品未找到');
+  }
+});
+
+// @desc    获取热门商品
+// @route   GET /api/products/top
+// @access  Public
+const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+  res.json(products);
+});
 
 export {
   getProducts,
@@ -140,4 +163,6 @@ export {
   deleteProduct,
   createProduct,
   updateProduct,
+  createProductReview,
+  getTopProducts,
 };

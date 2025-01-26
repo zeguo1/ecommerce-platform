@@ -2,12 +2,11 @@ import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';
 import asyncHandler from 'express-async-handler';
 import axios from 'axios';
+import bcrypt from 'bcryptjs';
 
 // @desc    注册新用户
 // @route   POST /api/users
 // @access  Public
-import bcrypt from 'bcryptjs';
-
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -77,6 +76,19 @@ const authUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('Invalid email or password');
   }
+});
+
+// @desc    用户注销
+// @route   POST /api/users/logout
+// @access  Private
+const logoutUser = asyncHandler(async (req, res) => {
+  // 清除客户端token
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    expires: new Date(0)
+  });
+
+  res.status(200).json({ message: '成功注销' });
 });
 
 // @desc    Get user profile
@@ -259,6 +271,7 @@ const wechatLogin = asyncHandler(async (req, res) => {
 export {
   registerUser,
   authUser,
+  logoutUser,
   getUserProfile,
   updateUserProfile,
   getUsers,

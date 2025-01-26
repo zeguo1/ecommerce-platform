@@ -9,6 +9,7 @@ import {
   deleteUser,
   getUserById,
   updateUser,
+  logoutUser,
 } from '../controllers/authController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
@@ -20,13 +21,17 @@ router.route('/register')
 router.route('/login')
   .post(authUser);
 
+// 用户注销路由
+router.post('/logout', logoutUser);
+
 router.route('/')
   .get(protect, admin, getUsers);
-router.post('/login', authUser);
+
 router
   .route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
+
 router
   .route('/:id')
   .delete(protect, admin, deleteUser)
