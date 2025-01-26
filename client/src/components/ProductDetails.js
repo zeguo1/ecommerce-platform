@@ -52,14 +52,36 @@ const ProductDetails = () => {
           <Col md={3}>
             <Card>
               <ListGroup variant='flush'>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>价格:</Col>
-                    <Col>
-                      <strong>¥{product.price}</strong>
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
+          <ListGroup.Item>
+            <Row>
+              <Col>价格：</Col>
+              <Col>
+                <strong>¥{product.price}</strong>
+                {product.isOnSale && (
+                  <span className="text-danger ml-2">
+                    促销价：¥{product.wechatPromotionPrice}
+                  </span>
+                )}
+              </Col>
+            </Row>
+          </ListGroup.Item>
+
+          {product.isWechatExclusive && (
+            <ListGroup.Item className="bg-warning">
+              微信小程序专属商品
+            </ListGroup.Item>
+          )}
+
+          {product.specifications.length > 0 && (
+            <ListGroup.Item>
+              <h5>规格参数</h5>
+              {product.specifications.map((spec, index) => (
+                <div key={index}>
+                  {spec.key}: {spec.value}
+                </div>
+              ))}
+            </ListGroup.Item>
+          )}
 
                 <ListGroup.Item>
                   <Row>

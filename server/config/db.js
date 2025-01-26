@@ -10,7 +10,11 @@ const connectDB = async () => {
       throw new Error("MONGODB_URI is not defined in .env file");
     }
 
-    await mongoose.connect(mongoURI);
+    await mongoose.connect(mongoURI, {
+      serverSelectionTimeoutMS: 30000, // 30秒超时
+      socketTimeoutMS: 45000, // 45秒超时
+      connectTimeoutMS: 30000, // 30秒连接超时
+    });
     console.log('MongoDB Connected');
   } catch (error) {
     console.error(`Error: ${error.message}`);

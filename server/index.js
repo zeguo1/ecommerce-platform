@@ -13,6 +13,7 @@ import authRoutes from './routes/auth.js';
 import orderRoutes from './routes/orders.js';
 import adminOrderRoutes from './routes/adminOrders.js';
 import shippingRoutes from './routes/shipping.js';
+import cartRoutes from './routes/cart.js';
 
 dotenv.config();
 
@@ -52,6 +53,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin/orders', adminOrderRoutes);
 app.use('/api/shipping', shippingRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

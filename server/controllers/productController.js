@@ -58,16 +58,47 @@ const deleteProduct = asyncHandler(async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
+  const {
+    name,
+    price,
+    originalPrice,
+    description,
+    images,
+    brand,
+    category,
+    countInStock,
+    specifications,
+    weight,
+    dimensions,
+    shippingClass,
+    isOnSale,
+    saleStartDate,
+    saleEndDate,
+    isFeatured,
+    isWechatExclusive,
+    wechatPromotionPrice
+  } = req.body;
+
   const product = new Product({
-    name: '示例商品',
-    price: 0,
-    user: req.user._id,
-    image: '/images/sample.jpg',
-    brand: '示例品牌',
-    category: '示例分类',
-    countInStock: 0,
-    numReviews: 0,
-    description: '示例描述',
+    name,
+    price,
+    originalPrice,
+    description,
+    images,
+    brand,
+    category,
+    countInStock,
+    specifications,
+    weight,
+    dimensions,
+    shippingClass,
+    isOnSale,
+    saleStartDate,
+    saleEndDate,
+    isFeatured,
+    isWechatExclusive,
+    wechatPromotionPrice,
+    user: req.user._id
   });
 
   const createdProduct = await product.save();
@@ -81,11 +112,22 @@ const updateProduct = asyncHandler(async (req, res) => {
   const {
     name,
     price,
+    originalPrice,
     description,
-    image,
+    images,
     brand,
     category,
     countInStock,
+    specifications,
+    weight,
+    dimensions,
+    shippingClass,
+    isOnSale,
+    saleStartDate,
+    saleEndDate,
+    isFeatured,
+    isWechatExclusive,
+    wechatPromotionPrice
   } = req.body;
 
   const product = await Product.findById(req.params.id);
@@ -93,11 +135,22 @@ const updateProduct = asyncHandler(async (req, res) => {
   if (product) {
     product.name = name;
     product.price = price;
+    product.originalPrice = originalPrice;
     product.description = description;
-    product.image = image;
+    product.images = images;
     product.brand = brand;
     product.category = category;
     product.countInStock = countInStock;
+    product.specifications = specifications;
+    product.weight = weight;
+    product.dimensions = dimensions;
+    product.shippingClass = shippingClass;
+    product.isOnSale = isOnSale;
+    product.saleStartDate = saleStartDate;
+    product.saleEndDate = saleEndDate;
+    product.isFeatured = isFeatured;
+    product.isWechatExclusive = isWechatExclusive;
+    product.wechatPromotionPrice = wechatPromotionPrice;
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);

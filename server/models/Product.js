@@ -7,10 +7,10 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
+    images: [{
       type: String,
       required: true,
-    },
+    }],
     brand: {
       type: String,
       required: true,
@@ -23,6 +23,10 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    specifications: [{
+      key: String,
+      value: String
+    }],
     
     // 价格和库存
     price: {
@@ -30,11 +34,22 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    originalPrice: {
+      type: Number,
+    },
     countInStock: {
       type: Number,
       required: true,
       default: 0,
     },
+    
+    // 促销信息
+    isOnSale: {
+      type: Boolean,
+      default: false,
+    },
+    saleStartDate: Date,
+    saleEndDate: Date,
     
     // 评分和评论
     rating: {
@@ -48,6 +63,25 @@ const productSchema = mongoose.Schema(
       default: 0,
     },
     
+    // 物流信息
+    weight: Number,
+    dimensions: {
+      length: Number,
+      width: Number,
+      height: Number
+    },
+    shippingClass: String,
+    
+    // 商品状态
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+    
     // 微信小程序相关
     isWechatExclusive: {
       type: Boolean,
@@ -55,12 +89,6 @@ const productSchema = mongoose.Schema(
     },
     wechatPromotionPrice: {
       type: Number,
-    },
-    
-    // 商品状态
-    isActive: {
-      type: Boolean,
-      default: true,
     },
   },
   {
