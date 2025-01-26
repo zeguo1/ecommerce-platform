@@ -1,0 +1,31 @@
+# 依赖目录
+node_modules/
+.server/node_modules/
+
+# 环境变量文件
+.env
+.env.local
+.env.development.local
+
+# 日志文件
+*.log
+logs/
+
+# 编辑器配置
+.vscode/
+.idea/
+
+# 构建产物
+build/
+dist/
+client/build/
+
+# 缓存文件
+.cache/
+
+# 调试文件
+debug/
+
+# 本地开发文件
+uploads/
+client/.env
