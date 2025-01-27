@@ -1,0 +1,72 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar flex-center">
+    <input 
+      placeholder="搜索商品" 
+      placeholder-class="placeholder"
+      bindinput="handleSearch"
+      value="{{keyword}}"
+    />
+    <image 
+      src="../../assets/icons/search.png" 
+      class="search-icon"
+    />
+  </view>
+
+  <!-- 筛选条件 -->
+  <view class="filter-bar flex-between">
+    <picker 
+      mode="selector" 
+      range="{{sortOptions}}" 
+      range-key="text"
+      bindchange="handleSortChange"
+    >
+      <view class="filter-item">
+        <text>{{sortOptions[sortIndex].text}}</text>
+        <image src="../../assets/icons/arrow-down.png" />
+      </view>
+    </picker>
+
+    <picker 
+      mode="selector" 
+      range="{{categoryOptions}}" 
+      range-key="name"
+      bindchange="handleCategoryChange"
+    >
+      <view class="filter-item">
+        <text>{{categoryOptions[categoryIndex].name}}</text>
+        <image src="../../assets/icons/arrow-down.png" />
+      </view>
+    </picker>
+  </view>
+
+  <!-- 商品列表 -->
+  <scroll-view 
+    scroll-y
+    class="product-list"
+    bindscrolltolower="loadMore"
+  >
+    <view 
+      class="product-item"
+      wx:for="{{productList}}"
+      wx:key="id"
+      bindtap="goProductDetail"
+      data-id="{{item.id}}"
+    >
+      <image src="{{item.image}}" />
+      <view class="product-info">
+        <text class="product-name">{{item.name}}</text>
+        <text class="price">¥{{item.price}}</text>
+        <text class="sales">已售{{item.sales}}件</text>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view wx:if="{{hasMore}}" class="loading-more">
+      <text>加载中...</text>
+    </view>
+    <view wx:else class="no-more">
+      <text>没有更多了</text>
+    </view>
+  </scroll-view>
+</view>

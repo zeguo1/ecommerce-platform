@@ -2,7 +2,7 @@ import Order from '../models/Order.js';
 import asyncHandler from 'express-async-handler';
 import crypto from 'crypto';
 import axios from 'axios';
-import config from '../config/config.js';
+import config from '../config/config.json' assert { type: 'json' };
 import xml2js from 'xml2js';
 
 // 微信支付配置

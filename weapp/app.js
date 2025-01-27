@@ -1,40 +1,73 @@
-// app.js
 App({
   onLaunch() {
-    // 初始化云开发
-    if (!wx.cloud) {
-      console.error('请使用 2.2.3 或以上的基础库以使用云能力');
-    } else {
-      wx.cloud.init({
-        env: 'your-env-id',
-        traceUser: true,
-      });
-    }
+    // 小程序初始化时执行
+    this.initApp();
+  },
 
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: res => {
-              this.globalData.userInfo = res.userInfo;
-              
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res);
-              }
-            }
-          });
+  globalData: {
+    userInfo: null, // 用户信息
+    cartCount: 0,   // 购物车商品数量
+    baseUrl: 'https://api.example.com' // 接口基础地址
+  },
+
+  // 初始化应用
+  initApp() {
+    // 检查登录状态
+    this.checkLoginStatus();
+    
+    // 获取系统信息
+    this.getSystemInfo();
+  },
+
+  // 检查登录状态
+  checkLoginStatus() {
+    const token = wx.getStorageSync('token');
+    if (token) {
+      // 如果有token，获取用户信息
+      this.getUserInfo();
+    }
+  },
+
+  // 获取用户信息
+  getUserInfo() {
+    wx.request({
+      url: `${this.globalData.baseUrl}/user/info`,
+      success: (res) => {
+        if (res.data.code === 0) {
+          this.globalData.userInfo = res.data.data;
         }
       }
     });
   },
 
-  globalData: {
-    userInfo: null,
-    cart: [], // 购物车数据
-    apiBaseUrl: 'https://api.example.com'
+  // 获取系统信息
+  getSystemInfo() {
+    wx.getSystemInfo({
+      success: (res) => {
+        this.globalData.systemInfo = res;
+      }
+    });
+  },
+
+  // 显示加载提示
+  showLoading(title = '加载中...') {
+    wx.showLoading({
+      title,
+      mask: true
+    });
+  },
+
+  // 隐藏加载提示
+  hideLoading() {
+    wx.hideLoading();
+  },
+
+  // 显示提示信息
+  showToast(title, icon = 'none') {
+    wx.showToast({
+      title,
+      icon,
+      duration: 2000
+    });
   }
 });

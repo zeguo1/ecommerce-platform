@@ -1,57 +1,83 @@
 /* 全局样式 */
 page {
   background-color: #f8f8f8;
-  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 28rpx;
   color: #333;
 }
 
-/* 容器样式 */
+/* 通用按钮样式 */
+button {
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+/* 通用输入框样式 */
+input {
+  height: 60rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  background-color: #fff;
+}
+
+/* 通用容器样式 */
 .container {
   padding: 20rpx;
 }
 
-/* 按钮样式 */
-.button {
-  background-color: #f44;
-  color: #fff;
-  border-radius: 50rpx;
-  padding: 20rpx 40rpx;
-  text-align: center;
-  margin: 20rpx 0;
-}
-
-.button[disabled] {
-  opacity: 0.6;
-}
-
-/* 商品卡片样式 */
-.product-card {
-  background: #fff;
-  border-radius: 10rpx;
-  margin-bottom: 20rpx;
-  padding: 20rpx;
-  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
-}
-
-/* 价格样式 */
-.price {
-  color: #f44;
+/* 通用标题样式 */
+.title {
   font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+/* 通用价格样式 */
+.price {
+  color: #ff2d4a;
   font-weight: bold;
 }
 
-/* 原价样式 */
-.original-price {
-  color: #999;
-  text-decoration: line-through;
-  font-size: 24rpx;
-  margin-left: 10rpx;
+/* 通用间距样式 */
+.mt-20 {
+  margin-top: 20rpx;
 }
 
-/* 加载更多样式 */
-.load-more {
-  text-align: center;
-  color: #999;
-  padding: 20rpx;
+.mb-20 {
+  margin-bottom: 20rpx;
+}
+
+.ml-20 {
+  margin-left: 20rpx;
+}
+
+.mr-20 {
+  margin-right: 20rpx;
+}
+
+/* 通用flex布局 */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 通用图片样式 */
+image {
+  display: block;
+}
+
+/* 通用链接样式 */
+navigator {
+  display: block;
 }

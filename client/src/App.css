@@ -151,6 +151,83 @@ button:hover {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* User Info Specific Styles */
+.profile-overview {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.avatar-section {
+  text-align: center;
+  min-width: 200px;
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid #f0f0f0;
+}
+
+.profile-details {
+  flex: 1;
+}
+
+.profile-details p {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.profile-details .text-success {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.profile-details .fa-weixin {
+  margin-right: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+@media (max-width: 768px) {
+  .profile-overview {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .avatar-section {
+    margin-bottom: 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .user-center-container {
     flex-direction: column;

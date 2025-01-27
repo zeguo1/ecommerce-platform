@@ -1,65 +1,57 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
+import mongoose from 'mongoose';
 
-const Order = sequelize.define('Order', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id',
-    },
+const orderSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   paymentMethod: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: String,
+    required: true
   },
   taxPrice: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    defaultValue: 0.0,
+    type: Number,
+    required: true,
+    default: 0.0
   },
   shippingPrice: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    defaultValue: 0.0,
+    type: Number,
+    required: true,
+    default: 0.0
   },
   totalPrice: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    defaultValue: 0.0,
+    type: Number,
+    required: true,
+    default: 0.0
   },
   isPaid: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
+    type: Boolean,
+    required: true,
+    default: false
   },
   paidAt: {
-    type: DataTypes.DATE,
+    type: Date
   },
   isDelivered: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
+    type: Boolean,
+    required: true,
+    default: false
   },
   deliveredAt: {
-    type: DataTypes.DATE,
+    type: Date
   },
   shippingAddress: {
-    type: DataTypes.JSON,
-    allowNull: false,
+    type: Object,
+    required: true
   },
   paymentResult: {
-    type: DataTypes.JSON,
-  },
+    type: Object
+  }
 }, {
-  tableName: 'Orders',
-  timestamps: true,
+  timestamps: true
 });
+
+const Order = mongoose.model('Order', orderSchema);
 
 export default Order;

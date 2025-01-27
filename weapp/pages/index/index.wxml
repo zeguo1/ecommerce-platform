@@ -1,27 +1,69 @@
-<!--pages/index/index.wxml-->
 <view class="container">
-  <!-- 商品列表 -->
-  <block wx:for="{{products}}" wx:key="id">
-    <view class="product-card" bindtap="goToProductDetail" data-id="{{item.id}}">
-      <image src="{{item.image}}" mode="aspectFill" class="product-image"></image>
-      <view class="product-info">
-        <view class="product-name">{{item.name}}</view>
-        <view class="price-section">
+  <!-- 搜索栏 -->
+  <view class="search-bar flex-center">
+    <input 
+      placeholder="搜索商品" 
+      placeholder-class="placeholder"
+      bindinput="handleSearch"
+    />
+    <image 
+      src="../../assets/icons/search.png" 
+      class="search-icon"
+    />
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper 
+    indicator-dots="{{true}}"
+    autoplay="{{true}}"
+    interval="5000"
+    circular="{{true}}"
+  >
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image 
+        src="{{item.image}}" 
+        mode="aspectFill"
+        bindtap="goProductDetail"
+        data-id="{{item.productId}}"
+      />
+    </swiper-item>
+  </swiper>
+
+  <!-- 分类导航 -->
+  <view class="category-nav flex-between">
+    <navigator 
+      wx:for="{{categories}}" 
+      wx:key="id"
+      url="/pages/productList/productList?categoryId={{item.id}}"
+    >
+      <image src="{{item.icon}}" />
+      <text>{{item.name}}</text>
+    </navigator>
+  </view>
+
+  <!-- 推荐商品 -->
+  <view class="recommend-products">
+    <view class="title flex-between">
+      <text>推荐商品</text>
+      <navigator url="/pages/productList/productList">
+        查看更多
+      </navigator>
+    </view>
+    
+    <view class="product-list">
+      <view 
+        class="product-item"
+        wx:for="{{recommendProducts}}"
+        wx:key="id"
+        bindtap="goProductDetail"
+        data-id="{{item.id}}"
+      >
+        <image src="{{item.image}}" />
+        <view class="product-info">
+          <text class="product-name">{{item.name}}</text>
           <text class="price">¥{{item.price}}</text>
-          <text wx:if="{{item.originalPrice}}" class="original-price">¥{{item.originalPrice}}</text>
-        </view>
-        <view class="actions">
-          <button class="button" bindtap="addToCart" data-product="{{item}}">加入购物车</button>
         </view>
       </view>
     </view>
-  </block>
-
-  <!-- 加载更多 -->
-  <view wx:if="{{!loading && hasMore}}" class="load-more" bindtap="onReachBottom">
-    加载更多...
-  </view>
-  <view wx:if="{{!hasMore}}" class="load-more">
-    没有更多了
   </view>
 </view>

@@ -1,8 +1,8 @@
-const Cart = require('../models/Cart');
-const Product = require('../models/Product');
+import Cart from '../models/Cart.js';
+import Product from '../models/Product.js';
 
 // 获取购物车
-exports.getCart = async (req, res) => {
+export const getCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.id })
       .populate('items.product')
@@ -27,7 +27,7 @@ exports.getCart = async (req, res) => {
 };
 
 // 修改商品数量
-exports.updateQuantity = async (req, res) => {
+export const updateQuantity = async (req, res) => {
   try {
     const { productId } = req.params;
     const { quantity } = req.body;
@@ -54,7 +54,7 @@ exports.updateQuantity = async (req, res) => {
 };
 
 // 删除商品
-exports.removeItem = async (req, res) => {
+export const removeItem = async (req, res) => {
   try {
     const { productId } = req.params;
 
@@ -75,7 +75,7 @@ exports.removeItem = async (req, res) => {
 };
 
 // 清空购物车
-exports.clearCart = async (req, res) => {
+export const clearCart = async (req, res) => {
   try {
     await Cart.findOneAndUpdate(
       { user: req.user.id },

@@ -2,12 +2,13 @@
   "pages": [
     "pages/index/index",
     "pages/cart/cart",
-    "pages/userCenter/userInfo",
     "pages/userCenter/address",
     "pages/userCenter/security",
     "pages/userCenter/orders",
     "pages/orderDetail/orderDetail",
-    "pages/payment/payment"
+    "pages/payment/payment",
+    "pages/userCenter/userInfo",
+    "pages/productList/productList"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -17,8 +18,8 @@
   },
   "tabBar": {
     "color": "#999",
-    "selectedColor": "#ff5000",
-    "backgroundColor": "#fff",
+    "selectedColor": "#ff2d4a",
+    "backgroundColor": "#fafafa",
     "borderStyle": "black",
     "list": [
       {
