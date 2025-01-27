@@ -1,7 +1,12 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/cart/cart"
+    "pages/cart/cart",
+    "pages/userCenter/userInfo",
+    "pages/userCenter/orders", 
+    "pages/userCenter/address",
+    "pages/userCenter/security",
+    "pages/orderDetail/orderDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -11,8 +16,9 @@
   },
   "tabBar": {
     "color": "#999",
-    "selectedColor": "#f44",
+    "selectedColor": "#ff5000",
     "backgroundColor": "#fff",
+    "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -24,8 +30,13 @@
         "pagePath": "pages/cart/cart",
         "text": "购物车",
         "iconPath": "assets/icons/cart.png",
-        "selectedIconPath": "assets/icons/cart-active.png",
-        "badge": "{{cartCount}}"
+        "selectedIconPath": "assets/icons/cart-active.png"
+      },
+      {
+        "pagePath": "pages/userCenter/userInfo",
+        "text": "我的",
+        "iconPath": "assets/icons/user.png",
+        "selectedIconPath": "assets/icons/user-active.png"
       }
     ]
   }
