@@ -1,0 +1,23 @@
+.container {
+  padding: 20rpx;
+}
+
+.security-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.1);
+}
+
+.security-item text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.security-item button {
+  margin: 0;
+}

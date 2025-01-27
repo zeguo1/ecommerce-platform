@@ -5,7 +5,14 @@
     "database": "ecommerce_dev",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "port": 3306
+    "port": 3306,
+    "wechatPay": {
+      "appId": "YOUR_WECHAT_APP_ID",
+      "mchId": "YOUR_MCH_ID",
+      "apiKey": "YOUR_API_KEY",
+      "notifyUrl": "https://yourdomain.com/api/wechat/callback",
+      "certPath": "/path/to/wechat/cert/apiclient_cert.p12"
+    }
   },
   "test": {
     "username": "root",
@@ -13,7 +20,14 @@
     "database": "ecommerce_test",
     "host": "localhost",
     "dialect": "mysql",
-    "port": 3306
+    "port": 3306,
+    "wechatPay": {
+      "appId": "YOUR_WECHAT_APP_ID",
+      "mchId": "YOUR_MCH_ID",
+      "apiKey": "YOUR_API_KEY",
+      "notifyUrl": "https://yourdomain.com/api/wechat/callback",
+      "certPath": "/path/to/wechat/cert/apiclient_cert.p12"
+    }
   },
   "production": {
     "username": "root",
@@ -21,6 +35,13 @@
     "database": "ecommerce_prod",
     "host": "localhost",
     "dialect": "mysql",
-    "port": 3306
+    "port": 3306,
+    "wechatPay": {
+      "appId": "YOUR_WECHAT_APP_ID",
+      "mchId": "YOUR_MCH_ID",
+      "apiKey": "YOUR_API_KEY",
+      "notifyUrl": "https://yourdomain.com/api/wechat/callback",
+      "certPath": "/path/to/wechat/cert/apiclient_cert.p12"
+    }
   }
 }

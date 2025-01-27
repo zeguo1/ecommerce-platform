@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="security-item">
+    <text>登录密码</text>
+    <button size="mini" bindtap="changePassword">修改</button>
+  </view>
+  
+  <view class="security-item">
+    <text>手机绑定</text>
+    <button size="mini" bindtap="bindPhone">绑定</button>
+  </view>
+  
+  <view class="security-item">
+    <text>支付密码</text>
+    <button size="mini" bindtap="setPaymentPassword">设置</button>
+  </view>
+</view>

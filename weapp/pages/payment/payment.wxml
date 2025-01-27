@@ -1,0 +1,32 @@
+<view class="container">
+  <!-- 订单信息 -->
+  <view class="order-info">
+    <view class="title">订单信息</view>
+    <view class="info-item">
+      <text>订单号：</text>
+      <text>{{orderInfo.orderNo}}</text>
+    </view>
+    <view class="info-item">
+      <text>总金额：</text>
+      <text class="price">¥{{orderInfo.totalAmount}}</text>
+    </view>
+  </view>
+
+  <!-- 支付方式 -->
+  <view class="payment-methods">
+    <view class="title">支付方式</view>
+    <radio-group bindchange="selectMethod">
+      <block wx:for="{{paymentMethods}}" wx:key="index">
+        <label class="method-item">
+          <radio value="{{item}}" checked="{{selectedMethod === item}}"/>
+          <text>{{item}}</text>
+        </label>
+      </block>
+    </radio-group>
+  </view>
+
+  <!-- 支付按钮 -->
+  <view class="footer">
+    <button class="pay-btn" bindtap="handlePayment">立即支付</button>
+  </view>
+</view>

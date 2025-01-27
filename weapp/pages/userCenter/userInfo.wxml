@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="user-info">
+    <image src="../../images/default-avatar.png" class="avatar"></image>
+    <view class="info">
+      <text class="nickname">用户昵称</text>
+      <text class="phone">绑定手机号：138****8888</text>
+    </view>
+  </view>
+
+  <view class="menu-list">
+    <navigator url="/pages/userCenter/orders" class="menu-item">
+      <text>我的订单</text>
+      <image src="../../assets/icons/arrow-right.png" class="arrow"></image>
+    </navigator>
+    <navigator url="/pages/userCenter/address" class="menu-item">
+      <text>收货地址</text>
+      <image src="../../assets/icons/arrow-right.png" class="arrow"></image>
+    </navigator>
+    <navigator url="/pages/userCenter/security" class="menu-item">
+      <text>账户安全</text>
+      <image src="../../assets/icons/arrow-right.png" class="arrow"></image>
+    </navigator>
+  </view>
+</view>

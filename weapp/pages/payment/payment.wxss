@@ -1,0 +1,76 @@
+.container {
+  padding: 20rpx;
+}
+
+/* 订单信息 */
+.order-info {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.order-info .title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.order-info .info-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+}
+
+.order-info .price {
+  color: #ff5000;
+  font-weight: bold;
+}
+
+/* 支付方式 */
+.payment-methods {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+}
+
+.payment-methods .title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.method-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.method-item:last-child {
+  border-bottom: none;
+}
+
+.method-item text {
+  margin-left: 20rpx;
+  font-size: 28rpx;
+}
+
+/* 支付按钮 */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx;
+  background: #fff;
+}
+
+.pay-btn {
+  background: #ff5000;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+}

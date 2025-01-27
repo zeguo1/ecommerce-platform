@@ -3,10 +3,11 @@
     "pages/index/index",
     "pages/cart/cart",
     "pages/userCenter/userInfo",
-    "pages/userCenter/orders", 
     "pages/userCenter/address",
     "pages/userCenter/security",
-    "pages/orderDetail/orderDetail"
+    "pages/userCenter/orders",
+    "pages/orderDetail/orderDetail",
+    "pages/payment/payment"
   ],
   "window": {
     "backgroundTextStyle": "light",
